@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # <xbar.title>Huawei B315s 4G Indicator</xbar.title>
-# <xbar.version>v0.1.1</xbar.version>
+# <xbar.version>v0.1.2-alpha</xbar.version>
 # <xbar.author>Tiaan Willemse</xbar.author>
 # <xbar.author.github>tiaanwillemse</xbar.author.github>
 # <xbar.desc>Checks the status of your Huawei B315s 4G connection</xbar.desc>
