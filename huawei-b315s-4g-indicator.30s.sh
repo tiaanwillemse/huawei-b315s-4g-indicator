@@ -1,21 +1,23 @@
 #!/bin/bash
 
-# <xbar.title>4G Indicator</xbar.title>
-# <xbar.version>v0.1.0</xbar.version>
+# <xbar.title>Huawei B315s 4G Indicator</xbar.title>
+# <xbar.version>v0.1.1</xbar.version>
 # <xbar.author>Tiaan Willemse</xbar.author>
 # <xbar.author.github>tiaanwillemse</xbar.author.github>
-# <xbar.desc>Checks the status of your 4G connection</xbar.desc>
-# <xbar.dependencies>bash,curl</xbar.dependencies>
+# <xbar.desc>Checks the status of your Huawei B315s 4G connection</xbar.desc>
+# <xbar.dependencies>bash,curl, sed</xbar.dependencies>
 # <xbar.abouturl>https://github.com/tiaanwillemse/huawei-b315s-4g-indicator</xbar.abouturl>
+# <xbar.image>https://github.com/tiaanwillemse/huawei-b315s-4g-indicator/blob/main/preview.png</xbar.image>
+# <xbar.var>string(VAR_ROUTER_IP="192.168.8.1"): Your router IP</xbar.var>
 # Icon Credit https://www.iconfinder.com/icons/2639907/cellular_network_icon
 
-sessionstring=$(curl --silent --output /dev/null --cookie-jar - 'http://192.168.8.1/html/home.html' \
+sessionstring=$(curl --silent --output /dev/null --cookie-jar - "http://${VAR_ROUTER_IP}/html/home.html" \
   -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
   -H 'Accept-Language: en-US,en;q=0.9,af;q=0.8' \
   -H 'Cache-Control: max-age=0' \
   -H 'Connection: keep-alive' \
   -H 'DNT: 1' \
-  -H 'Referer: http://192.168.8.1/html/home.html' \
+  -H "Referer: http://${VAR_ROUTER_IP}/html/home.html" \
   -H 'Upgrade-Insecure-Requests: 1' \
   -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36' \
   --compressed \
@@ -24,13 +26,13 @@ sessionstring=$(curl --silent --output /dev/null --cookie-jar - 'http://192.168.
 sessionid=$(echo "$sessionstring" | sed 's/.*SessionID//')
 sessionid=`echo $sessionid | sed 's/ *$//g'`
 
-response=$(curl 'http://192.168.8.1/api/monitoring/status' \
+response=$(curl "http://${VAR_ROUTER_IP}/api/monitoring/status" \
   -H 'Accept: */*' \
   -H 'Accept-Language: en-US,en;q=0.9,af;q=0.8' \
   -H 'Connection: keep-alive' \
   -H "Cookie: SessionID=$sessionid" \
   -H 'DNT: 1' \
-  -H 'Referer: http://192.168.8.1/html/home.html' \
+  -H "Referer: http://${VAR_ROUTER_IP}/html/home.html" \
   -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36' \
   -H 'X-Requested-With: XMLHttpRequest' \
   --compressed \
@@ -65,4 +67,5 @@ fi
 
 echo "|templateImage=$signalstrength"
 echo "---"
+echo "Router IP is ${VAR_ROUTER_IP}"
 echo "Signal strength is at $signalvalue"
