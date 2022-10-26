@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # <xbar.title>4G Indicator</xbar.title>
-# <xbar.version>v0.1</xbar.version>
+# <xbar.version>v0.1.0</xbar.version>
 # <xbar.author>Tiaan Willemse</xbar.author>
 # <xbar.author.github>tiaanwillemse</xbar.author.github>
 # <xbar.desc>Checks the status of your 4G connection</xbar.desc>
 # <xbar.dependencies>bash,curl</xbar.dependencies>
+# <xbar.abouturl>https://github.com/tiaanwillemse/huawei-b315s-4g-indicator</xbar.abouturl>
 # Icon Credit https://www.iconfinder.com/icons/2639907/cellular_network_icon
 
 sessionstring=$(curl --silent --output /dev/null --cookie-jar - 'http://192.168.8.1/html/home.html' \
